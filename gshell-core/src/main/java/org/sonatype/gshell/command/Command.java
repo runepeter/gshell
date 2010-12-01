@@ -16,6 +16,7 @@
 
 package org.sonatype.gshell.command;
 
+import javax.inject.Qualifier;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -29,6 +30,7 @@ import java.lang.annotation.Target;
  * @since 2.0
  */
 @Documented
+@Qualifier
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE})
 public @interface Command
