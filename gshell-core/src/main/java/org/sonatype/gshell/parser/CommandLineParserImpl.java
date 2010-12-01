@@ -26,6 +26,7 @@ import org.sonatype.gshell.parser.impl.visitor.ExecutingVisitor;
 import org.sonatype.gshell.parser.impl.visitor.LoggingVisitor;
 import org.sonatype.gshell.shell.Shell;
 
+import javax.inject.Named;
 import java.io.Reader;
 import java.io.StringReader;
 
@@ -35,6 +36,7 @@ import java.io.StringReader;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
+@Named
 public class CommandLineParserImpl
     implements CommandLineParser
 {

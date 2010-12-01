@@ -17,6 +17,7 @@
 package org.sonatype.gshell.command.registry;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Singleton;
 import jline.console.completer.NullCompleter;
 import jline.console.completer.Completer;
@@ -34,6 +35,7 @@ import java.util.List;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
+@Named("commands")
 @Singleton
 public class CommandsCompleter
     extends ArgumentCompleter

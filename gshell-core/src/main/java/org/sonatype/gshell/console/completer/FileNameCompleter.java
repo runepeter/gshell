@@ -17,6 +17,7 @@
 package org.sonatype.gshell.console.completer;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Provider;
 import javax.inject.Singleton;
 import jline.console.completer.Completer;
@@ -32,6 +33,7 @@ import static org.sonatype.gshell.variables.VariableNames.*;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
+@Named("file-name")
 @Singleton
 public class FileNameCompleter
     extends jline.console.completer.FileNameCompleter

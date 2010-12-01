@@ -17,6 +17,7 @@
 package org.sonatype.gshell.variables;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Provider;
 import javax.inject.Singleton;
 import jline.console.completer.Completer;
@@ -35,6 +36,7 @@ import java.util.List;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
+@Named("variable-name")
 @Singleton
 public class VariableNameCompleter
     implements Completer

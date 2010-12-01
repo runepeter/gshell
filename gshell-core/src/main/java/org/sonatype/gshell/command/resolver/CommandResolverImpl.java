@@ -17,6 +17,7 @@
 package org.sonatype.gshell.command.resolver;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Provider;
 import javax.inject.Singleton;
 import org.slf4j.Logger;
@@ -43,6 +44,7 @@ import static org.sonatype.gshell.variables.VariableNames.*;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
+@Named
 @Singleton
 public class CommandResolverImpl
     implements CommandResolver

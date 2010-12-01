@@ -17,6 +17,8 @@
 package org.sonatype.gshell.execute;
 
 import javax.inject.Inject;
+import javax.inject.Named;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -53,6 +55,7 @@ import static org.sonatype.gshell.variables.VariableNames.*;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
+@Named
 public class CommandExecutorImpl
     implements CommandExecutor
 {

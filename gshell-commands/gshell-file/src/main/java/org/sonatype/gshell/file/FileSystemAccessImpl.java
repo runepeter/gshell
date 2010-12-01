@@ -17,6 +17,7 @@
 package org.sonatype.gshell.file;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Provider;
 import org.codehaus.plexus.util.Os;
 import org.sonatype.gshell.variables.Variables;
@@ -34,6 +35,7 @@ import static org.sonatype.gshell.variables.VariableNames.SHELL_USER_HOME;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.3
  */
+@Named
 public class FileSystemAccessImpl
     implements FileSystemAccess
 {

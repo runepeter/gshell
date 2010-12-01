@@ -20,6 +20,8 @@ import javax.inject.Inject;
 
 import com.google.inject.Injector;
 import com.google.inject.Module;
+
+import javax.inject.Named;
 import javax.inject.Singleton;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandAction;
@@ -40,6 +42,7 @@ import java.util.List;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
+@Named
 @Singleton
 public class CommandRegistrarImpl
     extends CommandRegistrarSupport

@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.util.io.Closer;
 import org.sonatype.gshell.util.PrintBuffer;
 
+import javax.inject.Named;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -36,6 +37,7 @@ import java.util.MissingResourceException;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
+@Named
 public class HelpContentLoaderImpl
     implements HelpContentLoader
 {

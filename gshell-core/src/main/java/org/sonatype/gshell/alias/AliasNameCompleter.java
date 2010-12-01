@@ -17,6 +17,7 @@
 package org.sonatype.gshell.alias;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Singleton;
 import jline.console.completer.Completer;
 import jline.console.completer.StringsCompleter;
@@ -34,6 +35,7 @@ import java.util.Map;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
+@Named("alias-name")
 @Singleton
 public class AliasNameCompleter
     implements Completer
