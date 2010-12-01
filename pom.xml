@@ -304,6 +304,7 @@
         <module>gshell-ui</module>
         <module>gshell-gossip</module>
         <module>gshell-core</module>
+        <module>gshell-ext</module>
         <module>gshell-commands</module>
         <module>gshell-plexus</module>
         <module>gshell-maven-plugin</module>
