@@ -27,6 +27,7 @@
 
     <artifactId>gshell-core</artifactId>
     <name>GShell :: Core</name>
+    <packaging>bundle</packaging>
 
     <dependencies>
         <dependency>

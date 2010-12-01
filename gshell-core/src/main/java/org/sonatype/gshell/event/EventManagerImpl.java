@@ -16,10 +16,11 @@
 
 package org.sonatype.gshell.event;
 
-import javax.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.inject.Named;
+import javax.inject.Singleton;
 import java.util.EventObject;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -30,6 +31,7 @@ import java.util.Set;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
+@Named
 @Singleton
 public class EventManagerImpl
     implements EventManager
