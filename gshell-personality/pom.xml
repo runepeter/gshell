@@ -27,6 +27,7 @@
 
     <artifactId>gshell-personality</artifactId>
     <name>GShell :: Personality</name>
+    <packaging>bundle</packaging>
 
     <dependencies>
         <dependency>

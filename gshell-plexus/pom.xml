@@ -27,6 +27,7 @@
 
     <artifactId>gshell-plexus</artifactId>
     <name>GShell :: Plexus</name>
+    <packaging>bundle</packaging>
 
     <dependencies>
         <dependency>

@@ -22,6 +22,8 @@ import org.sonatype.gshell.branding.License;
 import org.sonatype.gshell.branding.LicenseSupport;
 import org.sonatype.gshell.util.PrintBuffer;
 
+import javax.inject.Named;
+import javax.inject.Singleton;
 import java.io.File;
 
 import static org.sonatype.gshell.variables.VariableNames.*;
@@ -32,6 +34,8 @@ import static org.sonatype.gshell.variables.VariableNames.*;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.0
  */
+@Named
+@Singleton
 public class BrandingImpl
     extends BrandingSupport
 {

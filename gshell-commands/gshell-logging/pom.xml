@@ -27,7 +27,8 @@
 
     <artifactId>gshell-logging</artifactId>
     <name>GShell Commands :: Logging</name>
-    
+    <packaging>bundle</packaging>
+
     <profiles>
         <profile>
             <id>assembly</id>

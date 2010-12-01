@@ -16,6 +16,7 @@
 
 package org.sonatype.gshell.logging.gossip;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 import org.sonatype.gossip.Gossip;
 import org.sonatype.gossip.listener.Listener;
@@ -37,6 +38,7 @@ import java.util.Set;
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  * @since 2.5
  */
+@Named
 @Singleton
 public class GossipLoggingSystem
     implements LoggingSystem

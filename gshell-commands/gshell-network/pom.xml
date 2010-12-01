@@ -27,7 +27,8 @@
 
     <artifactId>gshell-network</artifactId>
     <name>GShell Commands :: Network</name>
-    
+    <packaging>bundle</packaging>
+
     <profiles>
         <profile>
             <id>assembly</id>

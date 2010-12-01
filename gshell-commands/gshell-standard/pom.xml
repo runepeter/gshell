@@ -27,6 +27,7 @@
 
     <artifactId>gshell-standard</artifactId>
     <name>GShell Commands :: Standard</name>
+    <packaging>bundle</packaging>
 
     <dependencies>
         <dependency>

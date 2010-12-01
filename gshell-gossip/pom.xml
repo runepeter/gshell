@@ -27,6 +27,7 @@
 
     <artifactId>gshell-gossip</artifactId>
     <name>GShell :: Gossip</name>
+    <packaging>bundle</packaging>
 
     <dependencies>
         <dependency>

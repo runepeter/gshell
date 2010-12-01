@@ -27,7 +27,8 @@
 
     <artifactId>gshell-pref</artifactId>
     <name>GShell Commands :: Preferences</name>
-    
+    <packaging>bundle</packaging>
+
     <profiles>
         <profile>
             <id>assembly</id>

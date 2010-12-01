@@ -21,6 +21,8 @@ import org.sonatype.gshell.logging.Level;
 import org.sonatype.gshell.logging.Logger;
 import org.sonatype.gshell.logging.LoggingSystem;
 
+import javax.inject.Named;
+import javax.inject.Singleton;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -29,6 +31,8 @@ import java.util.Collections;
  *
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>
  */
+@Named
+@Singleton
 public class TestLoggingSystem
     implements LoggingSystem
 {
