@@ -22,6 +22,7 @@ import org.sonatype.gshell.command.CommandAction;
 import org.sonatype.gshell.command.GroupAction;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 
 /**
@@ -230,10 +231,10 @@ public class Node
 
     public void remove(final String name) {
         assert name != null;
-        
+
         Node node = find(name);
         if (node != null) {
-            node.children.remove(node);
+            children.remove(node);
         }
     }
 

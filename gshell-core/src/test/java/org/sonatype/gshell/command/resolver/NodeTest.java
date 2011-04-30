@@ -168,4 +168,31 @@ public class NodeTest
         assertEquals("a1", iter.next().getName());
         assertEquals("a2", iter.next().getName());
     }
+
+    @Test
+    public void testRemove() throws Exception
+    {
+        root.add("/a1", new DummyAction());
+        root.add("/a2", new DummyAction());
+        root.add("/b1", new DummyAction());
+
+        Collection<Node> children = root.children();
+        assertEquals(3, children.size());
+
+        assertNotNull(root.find("a1"));
+        assertEquals("a1", root.find("a1").getName());
+        root.remove("a1");
+        assertNull(root.find("a1"));
+
+        assertNotNull(root.find("a2"));
+        assertEquals("a2", root.find("a2").getName());
+        root.remove("a2");
+        assertNull(root.find("a2"));
+
+        assertNotNull(root.find("b1"));
+        assertEquals("b1", root.find("b1").getName());
+        root.remove("b1");
+        assertNull(root.find("b1"));
+    }
+
 }
