@@ -25,6 +25,7 @@ import org.apache.commons.cli.UnrecognizedOptionException;
 import org.slf4j.Logger;
 import org.sonatype.gossip.Log;
 import org.sonatype.gshell.util.IllegalAnnotationError;
+import org.sonatype.gshell.util.cli2.handler.DefaultHandler;
 import org.sonatype.gshell.util.cli2.handler.Handler;
 import org.sonatype.gshell.util.cli2.handler.Handlers;
 import org.sonatype.gshell.util.i18n.MessageSource;
@@ -32,14 +33,15 @@ import org.sonatype.gshell.util.i18n.ResourceBundleMessageSource;
 import org.sonatype.gshell.util.setter.SetterFactory;
 import org.sonatype.gshell.util.yarn.Yarn;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import static java.util.Arrays.asList;
 
 /**
  * Processes an object for cli annotations.
@@ -118,6 +120,65 @@ public class CliProcessor
     private void discoverDescriptors(final Object bean) {
         assert bean != null;
 
+        if (bean instanceof DynamicCommand) {
+            DynamicCommand command = (DynamicCommand) bean;
+            Map<String, Class<?>> argumentMap = command.getArgumentMap();
+
+            final AtomicInteger index = new AtomicInteger(0);
+            for (final String argumentName : argumentMap.keySet())
+            {
+                Argument argument = new Argument()
+                {
+                    public int index()
+                    {
+                        return index.get();
+                    }
+
+                    public String token()
+                    {
+                        return argumentName;
+                    }
+
+                    public boolean required()
+                    {
+                        return true;
+                    }
+
+                    public String description()
+                    {
+                        return argumentName;
+                    }
+
+                    public Class<? extends Handler> handler()
+                    {
+                        return DefaultHandler.class;
+                    }
+
+                    public Class<? extends Annotation> annotationType()
+                    {
+                        return Argument.class;
+                    }
+                };
+
+                ArgumentDescriptor descriptor = new ArgumentDescriptor(argument, SetterFactory.create(argumentName, command));
+
+                // Make sure the argument will fit in the list
+                while (index.get() >= argumentDescriptors.size())
+                {
+                    argumentDescriptors.add(null);
+                }
+
+                if (argumentDescriptors.get(index.get()) != null)
+                {
+                    throw new IllegalAnnotationError(String.format("Duplicate @Argument index: %s, on: %s", index, command));
+                }
+
+                argumentDescriptors.set(index.get(), descriptor);
+
+                index.incrementAndGet();
+            }
+        }
+
         // Recursively process all the methods/fields (@Inherited won't work here)
         for (Class<?> type = bean.getClass(); type != null; type = type.getSuperclass()) {
             for (Method method : type.getDeclaredMethods()) {
@@ -146,7 +207,7 @@ public class CliProcessor
         if (opt != null && arg != null) {
             throw new IllegalAnnotationError(String.format("Element can only implement @Option or @Argument, not both: %s", element));
         }
-
+        
         if (opt != null) {
             log.trace("Discovered @Option for: {}", element);
 

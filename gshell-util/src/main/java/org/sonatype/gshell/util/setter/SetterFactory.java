@@ -15,6 +15,8 @@
  */
 package org.sonatype.gshell.util.setter;
 
+import org.sonatype.gshell.util.cli2.DynamicCommand;
+
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -50,5 +52,13 @@ public class SetterFactory
         else {
             throw new Error();
         }
+    }
+
+    public static Setter create(final String argumentName, final DynamicCommand command) {
+
+        assert argumentName != null && argumentName.trim().length() != 0;
+        assert command != null;
+
+        return new DynamicCommandArgumentSetter(command, argumentName);
     }
 }
