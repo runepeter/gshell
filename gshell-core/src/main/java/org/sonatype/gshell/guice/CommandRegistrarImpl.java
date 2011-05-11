@@ -74,22 +74,37 @@ public class CommandRegistrarImpl
 
         log.trace("Registering command: {}", className);
 
+        System.err.println("CA.1: " + className);
         CommandAction command = createAction(className);
+        System.err.println("CA.2: " + command);
 
         Command meta = command.getClass().getAnnotation(Command.class);
         assert meta != null;
         String name = meta.name();
+        System.err.println("Name: " + name);
 
+        System.err.println("ping");
         registry.registerCommand(name, command);
+        System.err.println("pong");
     }
 
     @SuppressWarnings({"unchecked"})
     private CommandAction createAction(final String className) throws ClassNotFoundException {
         assert className != null;
-        Class<?> type = loadClass(className);
-        Iterator<BeanEntry<Annotation, ?>> iter = container.locate(Key.get((Class)type)).iterator();
-        if (iter.hasNext()) {
-            return (CommandAction) iter.next().getValue();
+        Class<?> type = null;
+        try
+        {
+            type = loadClass(className);
+            System.err.println("type: " + type + " :: " + Key.get((Class)type));
+            Iterator<BeanEntry<Annotation, ?>> iter = container.locate(Key.get((Class)type)).iterator();
+            if (iter.hasNext()) {
+                System.err.println("next");
+                return (CommandAction) iter.next().getValue();
+            }
+        } catch (ClassNotFoundException e)
+        {
+            System.err.println("EXCEPTION: " + e.getMessage());
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
         // This should really never happen
         throw new RuntimeException("Unable to load command action implementation: " + type);

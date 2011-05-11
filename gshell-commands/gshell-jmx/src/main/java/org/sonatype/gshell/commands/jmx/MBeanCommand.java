@@ -1,5 +1,6 @@
 package org.sonatype.gshell.commands.jmx;
 
+import com.google.inject.name.Named;
 import jline.console.completer.Completer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,10 +42,11 @@ public class MBeanCommand extends CommandActionSupport
         this.operationSet = new HashSet<String>();
     }
 
-    @Override
-    public Completer[] getCompleters()
-    {
-        return new Completer[]{new MBeanCompleter()};
+    @Inject
+    public MBeanCommand installCompleters(final @Named("mbean-name") Completer c1) {
+        assert c1 != null;
+        setCompleters(c1, null);
+        return this;
     }
 
     public Object execute(CommandContext context) throws Exception

@@ -92,7 +92,9 @@ public abstract class CommandRegistrarSupport
                     continue;
                 }
 
+                System.err.println("king: " + config.getId());
                 registerCommandSet(config);
+                System.err.println("king");
             }
         }
     }
@@ -108,6 +110,7 @@ public abstract class CommandRegistrarSupport
 
             if (command.isEnabled()) {
                 registerCommand(command);
+                System.err.println("klung");
             }
             else {
                 log.debug("Skipping disabled command: {}", command);
@@ -122,10 +125,12 @@ public abstract class CommandRegistrarSupport
 
         String type = config.getAction();
         String name = config.getName();
+        System.err.println(name + " => " + type);
 
         try {
             if (name == null) {
                 registerCommand(type);
+                System.err.println("pung");
             }
             else {
                 registerCommand(name, type);
@@ -149,6 +154,7 @@ public abstract class CommandRegistrarSupport
                 log.debug("Discovered:");
                 while (resources.hasMoreElements()) {
                     URL url = resources.nextElement();
+                    System.err.println("URL: " + url);
                     log.debug("    {}", url);
                     CommandsXpp3Reader reader = new CommandsXpp3Reader();
                     InputStream input = url.openStream();
