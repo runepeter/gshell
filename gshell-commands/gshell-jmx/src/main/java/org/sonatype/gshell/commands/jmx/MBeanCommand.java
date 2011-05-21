@@ -1,5 +1,6 @@
 package org.sonatype.gshell.commands.jmx;
 
+import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import jline.console.completer.Completer;
 import org.slf4j.Logger;
@@ -7,15 +8,13 @@ import org.slf4j.LoggerFactory;
 import org.sonatype.gshell.command.Command;
 import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.registry.CommandRegistry;
+import org.sonatype.gshell.command.registry.DuplicateCommandException;
 import org.sonatype.gshell.command.registry.NoSuchCommandException;
 import org.sonatype.gshell.command.support.CommandActionSupport;
 import org.sonatype.gshell.util.cli2.Argument;
+import org.sonatype.gshell.variables.Variables;
 
-import javax.inject.Inject;
-import javax.management.MBeanInfo;
-import javax.management.MBeanOperationInfo;
-import javax.management.MBeanServer;
-import javax.management.ObjectName;
+import javax.management.*;
 import java.lang.management.ManagementFactory;
 import java.util.HashSet;
 import java.util.Set;
@@ -23,7 +22,7 @@ import java.util.Set;
 @Command(name = "mbean")
 public class MBeanCommand extends CommandActionSupport
 {
-    private static final String JMX_MBEAN = "jmx.mbean";
+    public static final String JMX_MBEAN = "jmx.mbean";
 
     private final Logger logger = LoggerFactory.getLogger(MBeanCommand.class);
 
@@ -35,15 +34,32 @@ public class MBeanCommand extends CommandActionSupport
     private String mbeanObjectName;
 
     @Inject
-    public MBeanCommand(final CommandRegistry registry)
+    public MBeanCommand(final CommandRegistry registry) throws Exception
     {
         this.registry = registry;
         this.server = ManagementFactory.getPlatformMBeanServer();
         this.operationSet = new HashSet<String>();
     }
 
+    @Inject(optional = true)
+    public void setDefaultMBean(final @Named("JMX_DEFAULT_MBEAN") String mbeanObjectName)
+    {
+        if (mbeanObjectName != null && mbeanObjectName.trim().length() > 0)
+        {
+            try
+            {
+                ObjectName defaultObjectName = new ObjectName(mbeanObjectName);
+                registerOperations(defaultObjectName);
+            } catch (Exception e)
+            {
+                throw new RuntimeException("Unable to initialize default MBean '" + mbeanObjectName + "'.", e);
+            }
+        }
+    }
+
     @Inject
-    public MBeanCommand installCompleters(final @Named("mbean-name") Completer c1) {
+    public MBeanCommand installCompleters(final @Named("mbean-name") Completer c1)
+    {
         assert c1 != null;
         setCompleters(c1, null);
         return this;
@@ -52,19 +68,25 @@ public class MBeanCommand extends CommandActionSupport
     public Object execute(CommandContext context) throws Exception
     {
         ObjectName objectName = new ObjectName(mbeanObjectName);
-        MBeanInfo beanInfo = server.getMBeanInfo(objectName);
 
         clearRegisteredMBeanOperations();
 
+        registerOperations(objectName);
+
+        context.getVariables().set(JMX_MBEAN, mbeanObjectName);
+
+        return Result.SUCCESS;
+    }
+
+    private void registerOperations(ObjectName objectName)
+            throws InstanceNotFoundException, IntrospectionException, ReflectionException, DuplicateCommandException
+    {
+        MBeanInfo beanInfo = server.getMBeanInfo(objectName);
         for (MBeanOperationInfo operationInfo : beanInfo.getOperations())
         {
             registry.registerCommand(operationInfo.getName(), new OperationDynamicCommandAction(operationInfo, objectName, server));
             operationSet.add(operationInfo.getName());
         }
-
-        context.getVariables().set(JMX_MBEAN, mbeanObjectName);
-
-        return Result.SUCCESS;
     }
 
     private void clearRegisteredMBeanOperations()
