@@ -18,50 +18,63 @@
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-    <modelVersion>4.0.0</modelVersion>
+  <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>org.sonatype.gshell.commands</groupId>
-        <artifactId>gshell-commands</artifactId>
-        <version>2.6.5-SNAPSHOT</version>
-    </parent>
+  <parent>
+    <groupId>org.sonatype.gshell.commands</groupId>
+    <artifactId>gshell-commands</artifactId>
+    <version>2.6.5.1-SNAPSHOT</version>
+  </parent>
 
-    <artifactId>gshell-jmx</artifactId>
-    <name>GShell Commands :: JMX</name>
+  <artifactId>gshell-jmx</artifactId>
+  <version>2.6.5.1-SNAPSHOT</version>
+  <name>GShell Commands :: JMX</name>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.codehaus.plexus</groupId>
-            <artifactId>plexus-utils</artifactId>
-            <version>2.0.7</version>
-        </dependency>
-    </dependencies>
+  <dependencies>
+    <dependency>
+      <groupId>org.sonatype.gshell</groupId>
+      <artifactId>gshell-util</artifactId>
+      <version>2.6.5.1-SNAPSHOT</version>
+    </dependency>
 
-    <profiles>
-        <profile>
-            <id>assembly</id>
-            <activation>
-                <property>
-                    <name>!skipAssembly</name>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.sonatype.maven.plugins</groupId>
-                        <artifactId>maven-sisu-assembler-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>generate</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>   
-    
+    <dependency>
+      <groupId>org.codehaus.plexus</groupId>
+      <artifactId>plexus-utils</artifactId>
+      <version>2.0.7</version>
+    </dependency>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <profiles>
+    <profile>
+      <id>assembly</id>
+      <activation>
+        <property>
+          <name>!skipAssembly</name>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.sonatype.maven.plugins</groupId>
+            <artifactId>maven-sisu-assembler-plugin</artifactId>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>generate</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+
 </project>
 

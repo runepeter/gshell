@@ -27,6 +27,7 @@
     </parent>
 
     <artifactId>gshell-util</artifactId>
+    <version>2.6.5.1-SNAPSHOT</version>
     <name>GShell :: Util</name>
 
     <dependencies>

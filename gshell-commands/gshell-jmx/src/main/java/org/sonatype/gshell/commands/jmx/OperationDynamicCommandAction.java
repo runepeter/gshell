@@ -6,7 +6,10 @@ import org.sonatype.gshell.command.CommandContext;
 import org.sonatype.gshell.command.IO;
 import org.sonatype.gshell.command.support.DynamicCommandActionSupport;
 
-import javax.management.*;
+import javax.management.MBeanOperationInfo;
+import javax.management.MBeanParameterInfo;
+import javax.management.MBeanServer;
+import javax.management.ObjectName;
 import java.util.*;
 
 public class OperationDynamicCommandAction extends DynamicCommandActionSupport
@@ -30,7 +33,7 @@ public class OperationDynamicCommandAction extends DynamicCommandActionSupport
 
     public OperationDynamicCommandAction(final MBeanOperationInfo operationInfo, final ObjectName mbeanName, final MBeanServer mbeanServer)
     {
-        super(toArgumentDefinitionMap(operationInfo, mbeanName, mbeanServer));
+        super(toArgumentDefinitionMap(operationInfo));
 
         this.operationInfo = operationInfo;
         this.mbeanName = mbeanName;
@@ -51,8 +54,11 @@ public class OperationDynamicCommandAction extends DynamicCommandActionSupport
         setCompleters(list);
     }
 
-    private static LinkedHashMap<String, Class<?>> toArgumentDefinitionMap(final MBeanOperationInfo operationInfo, final ObjectName mbeanName, final MBeanServer mbeanServer)
+    private static LinkedHashMap<String, Class<?>> toArgumentDefinitionMap(final MBeanOperationInfo operationInfo)
     {
+        if (operationInfo == null) {
+            throw new IllegalArgumentException("MBeanOperationInfo argument cannot be 'null'.");
+        }
 
         LinkedHashMap<String, Class<?>> map = new LinkedHashMap<String, Class<?>>();
 
@@ -78,18 +84,6 @@ public class OperationDynamicCommandAction extends DynamicCommandActionSupport
     {
         IO io = commandContext.getIo();
 
-        if (commandContext.getArguments().length != operationInfo.getSignature().length)
-        {
-            StringBuffer buffer = new StringBuffer("Usage: ");
-            buffer.append(operationInfo.getName());
-            for (MBeanParameterInfo parameterInfo : operationInfo.getSignature())
-            {
-                buffer.append(" <" + parameterInfo.getType() + ">");
-            }
-            io.println(buffer);
-            return Result.FAILURE;
-        }
-
         List<String> list = new ArrayList<String>();
         for (MBeanParameterInfo parameterInfo : operationInfo.getSignature())
         {
@@ -103,10 +97,9 @@ public class OperationDynamicCommandAction extends DynamicCommandActionSupport
         for (String key : getArgumentMap().keySet())
         {
             l.add(getValue(key));
-            io.println(key + " = " + getValue(key) + "(" + getType(key) + ")");
         }
 
-        Object [] array = new Object[l.size()];
+        Object[] array = new Object[l.size()];
         array = l.toArray(array);
 
         try
@@ -115,7 +108,7 @@ public class OperationDynamicCommandAction extends DynamicCommandActionSupport
             io.println(result);
         } catch (Exception e)
         {
-            io.println(e.getMessage());
+            io.println("Unable to invoke operation: '" + e.getMessage() + "'.");
         }
 
         return Result.SUCCESS;

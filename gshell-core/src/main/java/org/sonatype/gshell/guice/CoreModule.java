@@ -34,6 +34,7 @@ import org.sonatype.gshell.command.resolver.CommandResolver;
 import org.sonatype.gshell.command.resolver.CommandResolverImpl;
 import org.sonatype.gshell.command.resolver.NodePathCompleter;
 import org.sonatype.gshell.console.completer.FileNameCompleter;
+import org.sonatype.gshell.console.completer.MBeanCompleter;
 import org.sonatype.gshell.event.EventManager;
 import org.sonatype.gshell.event.EventManagerImpl;
 import org.sonatype.gshell.execute.CommandExecutor;
@@ -87,6 +88,7 @@ public class CoreModule
         bind(Completer.class).annotatedWith(named("meta-help-page-name")).to(MetaHelpPageNameCompleter.class);
         bind(Completer.class).annotatedWith(named("level-name")).to(LevelNameCompleter.class);
         bind(Completer.class).annotatedWith(named("logger-name")).to(LoggerNameCompleter.class);
+        bind(Completer.class).annotatedWith(named("mbean-name")).to(MBeanCompleter.class);
     }
 
     @Provides
