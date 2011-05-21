@@ -69,7 +69,6 @@ public class CommandRegistryImpl
             ((NameAware) command).setName(name);
         }
 
-        System.err.println(name + " -> " + command);
         commands.put(name, command);
         events.publish(new CommandRegisteredEvent(name, command));
     }

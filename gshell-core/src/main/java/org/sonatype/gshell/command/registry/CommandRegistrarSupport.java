@@ -108,7 +108,6 @@ public abstract class CommandRegistrarSupport
 
             if (command.isEnabled()) {
                 registerCommand(command);
-                System.err.println("klung");
             }
             else {
                 log.debug("Skipping disabled command: {}", command);
