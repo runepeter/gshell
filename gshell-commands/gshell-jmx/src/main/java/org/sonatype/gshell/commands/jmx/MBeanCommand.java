@@ -23,7 +23,7 @@ import java.util.Set;
 @Command(name = "mbean")
 public class MBeanCommand extends CommandActionSupport
 {
-    private static final String CURRENT_MBEAN = "current.mbean";
+    private static final String JMX_MBEAN = "jmx.mbean";
 
     private final Logger logger = LoggerFactory.getLogger(MBeanCommand.class);
 
@@ -62,7 +62,7 @@ public class MBeanCommand extends CommandActionSupport
             operationSet.add(operationInfo.getName());
         }
 
-        context.getVariables().set(CURRENT_MBEAN, mbeanObjectName);
+        context.getVariables().set(JMX_MBEAN, mbeanObjectName);
 
         return Result.SUCCESS;
     }
