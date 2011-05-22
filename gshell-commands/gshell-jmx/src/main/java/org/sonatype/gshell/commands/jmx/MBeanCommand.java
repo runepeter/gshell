@@ -12,7 +12,6 @@ import org.sonatype.gshell.command.registry.DuplicateCommandException;
 import org.sonatype.gshell.command.registry.NoSuchCommandException;
 import org.sonatype.gshell.command.support.CommandActionSupport;
 import org.sonatype.gshell.util.cli2.Argument;
-import org.sonatype.gshell.variables.Variables;
 
 import javax.management.*;
 import java.lang.management.ManagementFactory;
@@ -39,22 +38,6 @@ public class MBeanCommand extends CommandActionSupport
         this.registry = registry;
         this.server = ManagementFactory.getPlatformMBeanServer();
         this.operationSet = new HashSet<String>();
-    }
-
-    @Inject(optional = true)
-    public void setDefaultMBean(final @Named("JMX_DEFAULT_MBEAN") String mbeanObjectName)
-    {
-        if (mbeanObjectName != null && mbeanObjectName.trim().length() > 0)
-        {
-            try
-            {
-                ObjectName defaultObjectName = new ObjectName(mbeanObjectName);
-                registerOperations(defaultObjectName);
-            } catch (Exception e)
-            {
-                throw new RuntimeException("Unable to initialize default MBean '" + mbeanObjectName + "'.", e);
-            }
-        }
     }
 
     @Inject
