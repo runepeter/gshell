@@ -67,7 +67,7 @@ public class MBeanCommand extends CommandActionSupport
         MBeanInfo beanInfo = server.getMBeanInfo(objectName);
         for (MBeanOperationInfo operationInfo : beanInfo.getOperations())
         {
-            registry.registerCommand(operationInfo.getName(), new OperationDynamicCommandAction(operationInfo, objectName, server));
+            registry.registerCommand(operationInfo.getName(), new OperationDynamicCommand(operationInfo, objectName, server));
             operationSet.add(operationInfo.getName());
         }
     }

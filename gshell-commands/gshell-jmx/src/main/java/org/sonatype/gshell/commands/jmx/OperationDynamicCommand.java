@@ -12,7 +12,7 @@ import javax.management.MBeanServer;
 import javax.management.ObjectName;
 import java.util.*;
 
-public class OperationDynamicCommandAction extends DynamicCommandActionSupport
+public class OperationDynamicCommand extends DynamicCommandActionSupport
 {
     private final MBeanOperationInfo operationInfo;
     private final ObjectName mbeanName;
@@ -31,7 +31,7 @@ public class OperationDynamicCommandAction extends DynamicCommandActionSupport
         }
     };
 
-    public OperationDynamicCommandAction(final MBeanOperationInfo operationInfo, final ObjectName mbeanName, final MBeanServer mbeanServer)
+    public OperationDynamicCommand(final MBeanOperationInfo operationInfo, final ObjectName mbeanName, final MBeanServer mbeanServer)
     {
         super(toArgumentDefinitionMap(operationInfo));
 

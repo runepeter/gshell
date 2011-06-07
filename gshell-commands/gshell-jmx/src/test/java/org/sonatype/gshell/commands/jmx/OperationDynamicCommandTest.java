@@ -18,7 +18,7 @@ import java.lang.management.ManagementFactory;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-public class OperationDynamicCommandActionTest
+public class OperationDynamicCommandTest
 {
     private static final ObjectName MBEAN_NAME = objectName("org.sonatype.gshell.jmx:type=Calculator");
 
@@ -42,13 +42,13 @@ public class OperationDynamicCommandActionTest
 
     @Test(expected = IllegalArgumentException.class)
     public void testNullOperationArgument() throws Exception {
-        new OperationDynamicCommandAction(null, MBEAN_NAME, mbeanServer);
+        new OperationDynamicCommand(null, MBEAN_NAME, mbeanServer);
     }
 
     @Test
     public void testAdd() throws Exception {
 
-        OperationDynamicCommandAction addAction = new OperationDynamicCommandAction(getOperation("add"), MBEAN_NAME, mbeanServer);
+        OperationDynamicCommand addAction = new OperationDynamicCommand(getOperation("add"), MBEAN_NAME, mbeanServer);
         addAction.setValue("p1", 1);
         addAction.setValue("p2", 2);
 
