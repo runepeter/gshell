@@ -54,6 +54,12 @@ public class SetCommand
     @Option(name = "v", longName = "verbose")
     private boolean verbose;
 
+    /**
+     * @since 2.5.6
+     */
+    @Option(name = "e", longName = "evaluate")
+    private boolean evaluate;
+
     @Argument(index = 0)
     private String name;
 
@@ -81,6 +87,15 @@ public class SetCommand
         }
 
         String value = Strings.join(values.toArray(), " ");
+
+        if (evaluate) {
+            Object result = context.getShell().execute(value);
+            if (result == null || result instanceof Result) {
+                io.error(messages.format("error.expression-did-not-return-a-value", value));
+                return Result.FAILURE;
+            }
+            value = result.toString();
+        }
 
         switch (mode) {
             case PROPERTY:
