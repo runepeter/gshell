@@ -23,9 +23,10 @@
     <parent>
         <groupId>org.sonatype.gshell</groupId>
         <artifactId>gshell</artifactId>
-        <version>2.6.5-SNAPSHOT</version>
+        <version>2.6.5</version>
     </parent>
 
+    <groupId>org.brylex.gshell</groupId>
     <artifactId>gshell-core</artifactId>
     <version>2.6.5.1-SNAPSHOT</version>
     <name>GShell :: Core</name>
@@ -37,7 +38,7 @@
         </dependency>
 
         <dependency>
-            <groupId>org.sonatype.gshell</groupId>
+            <groupId>org.brylex.gshell</groupId>
             <artifactId>gshell-util</artifactId>
             <version>2.6.5.1-SNAPSHOT</version>
         </dependency>

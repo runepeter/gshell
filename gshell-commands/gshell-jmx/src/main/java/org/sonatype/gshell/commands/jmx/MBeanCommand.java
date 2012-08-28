@@ -11,6 +11,7 @@ import org.sonatype.gshell.command.registry.CommandRegistry;
 import org.sonatype.gshell.command.registry.DuplicateCommandException;
 import org.sonatype.gshell.command.registry.NoSuchCommandException;
 import org.sonatype.gshell.command.support.CommandActionSupport;
+import org.sonatype.gshell.shell.Shell;
 import org.sonatype.gshell.util.cli2.Argument;
 
 import javax.management.*;
@@ -22,10 +23,12 @@ import java.util.Set;
 public class MBeanCommand extends CommandActionSupport
 {
     public static final String JMX_MBEAN = "jmx.mbean";
+    public static final String NO_MBEAN = "<NO MBEAN>";
 
     private final Logger logger = LoggerFactory.getLogger(MBeanCommand.class);
 
     private final MBeanServer server;
+    private final Shell shell;
     private final CommandRegistry registry;
     private final Set<String> operationSet;
 
@@ -33,11 +36,25 @@ public class MBeanCommand extends CommandActionSupport
     private String mbeanObjectName;
 
     @Inject
-    public MBeanCommand(final CommandRegistry registry) throws Exception
+    public MBeanCommand(final CommandRegistry registry, final Shell shell) throws Exception
     {
+        this.shell = shell;
         this.registry = registry;
         this.server = ManagementFactory.getPlatformMBeanServer();
         this.operationSet = new HashSet<String>();
+
+        Object o = shell.getVariables().get(JMX_MBEAN);
+        if (o != null && !NO_MBEAN.equals(o)) {
+
+            ObjectName objectName = new ObjectName("" + o);
+            MBeanInfo beanInfo = server.getMBeanInfo(objectName);
+            if (beanInfo != null) {
+                registerOperations(objectName);
+            } else {
+                logger.info("Unable to register commands for MBean {}.", o);
+            }
+
+        }
     }
 
     @Inject
